@@ -7,8 +7,6 @@ const mongoUserPass = mongoConfig.username
 
 const mongoURL = `mongodb+srv://${mongoUserPass}${mongoConfig.host}/${mongoConfig.database}?retryWrites=true&w=majority`
 
-// console.log(mongoURL)
-
 mongoose
   .connect(mongoURL, {
     useNewUrlParser: true,

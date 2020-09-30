@@ -6,106 +6,103 @@ import crypto from 'crypto'
 import transporter from '@config/mailer'
 
 export default class AuthController {
+  async auth (req: Request, res: Response) {
+    const { email, password } = req.body
 
-	async auth (req: Request, res: Response) {
-		const {email, password} = req.body;
+    const user = await User.findOne({ email }).select('+password')
 
-		const user = await User.findOne({email}).select('+password');
-		
-		if(!user) {
-			return res.status(400).send({error: 'E-mail ou senha incorretos'});
-		}		
+    if (!user) {
+      return res.status(400).send({ error: 'E-mail ou senha incorretos' })
+    }
 
-		if(!await bcrypt.compare(password, user.password)) {
-			return res.status(400).send({error: 'E-mail ou senha incorretos'});
-		}
-		
-		if(!user.active){
-			return res.status(400).send({error: 'Conta inativa'});
-		}
+    if (!await bcrypt.compare(password, user.password)) {
+      return res.status(400).send({ error: 'E-mail ou senha incorretos' })
+    }
 
-		user.password = undefined;
-		
-		res.json({
-			user,
-			token: generateUserToken({id: user.id})
-		});
-	}
+    if (!user.active) {
+      return res.status(400).send({ error: 'Conta inativa' })
+    }
 
-	async forgot_password (req: Request, res: Response) {
-		const { email } = req.body;
+    user.password = undefined
 
-		try {
-			const user = await User.findOne({email}).select('+password');
+    res.json({
+      user,
+      token: generateUserToken({ id: user.id })
+    })
+  }
 
-			if(!user) {
-				return res.status(400).send({error: 'Usuário não encontrado'});
-			}
+  async forgotPassword (req: Request, res: Response) {
+    const { email } = req.body
 
-			const token = crypto.randomBytes(20).toString('hex');
-			const expireTime = new Date();			
-			expireTime.setHours(expireTime.getHours() + 1)
+    try {
+      const user = await User.findOne({ email }).select('+password')
 
-			await User.findByIdAndUpdate(user.id, {
-				'$set': {
-					passwordResetToken: token,
-					passwordResetExpires: expireTime
-				}
-			})
+      if (!user) {
+        return res.status(400).send({ error: 'Usuário não encontrado' })
+      }
 
-			const forgotMailInfo = {
-				from: 'Adequei <suporte@adequei.com.br>',
-				to: email,
-				subject: "Solicitação de recuperação de senha Adequei",
-				template: 'forgotPassword',
-				context: { token, email }				
-			}
+      const token = crypto.randomBytes(20).toString('hex')
+      const expireTime = new Date()
+      expireTime.setHours(expireTime.getHours() + 1)
 
-			transporter.sendMail(forgotMailInfo, (error) => {
-				if (error) {
-					console.log('Não foi possível enviar o email de recuperação de senha.')
-				}
-			})
+      await User.findByIdAndUpdate(user.id, {
+        $set: {
+          passwordResetToken: token,
+          passwordResetExpires: expireTime
+        }
+      })
 
-			return res.send();
+      const forgotMailInfo = {
+        from: 'Adequei <suporte@adequei.com.br>',
+        to: email,
+        subject: 'Solicitação de recuperação de senha Adequei',
+        template: 'forgotPassword',
+        context: { token, email }
+      }
 
-		} catch(error) {
-			console.log(error)
-			res.status(400).json({error: 'Erro durante a o processo de recuperação de senha, tente novamente.'})
-		}
-	}
+      transporter.sendMail(forgotMailInfo, (error) => {
+        if (error) {
+          console.log('Não foi possível enviar o email de recuperação de senha.')
+        }
+      })
 
-	async reset_password (req: Request, res: Response) {
+      return res.send()
+    } catch (error) {
+      console.log(error)
+      res.status(400).json({ error: 'Erro durante a o processo de recuperação de senha, tente novamente.' })
+    }
+  }
 
-		const { email, token, newPassword } = req.body;
+  async resetPassword (req: Request, res: Response) {
+    const { email, token, newPassword } = req.body
 
-		try {
-			const user = await User.findOne({email})
-				.select('+passwordResetToken passwordResetExpires');
+    try {
+      const user = await User.findOne({ email })
+        .select('+passwordResetToken passwordResetExpires')
 
-			if(!user) {
-				return res.status(400).send({error: 'Usuário não encontrado'});
-			}
+      if (!user) {
+        return res.status(400).send({ error: 'Usuário não encontrado' })
+      }
 
-			if(token !== user.passwordResetToken) {
-				return res.status(400).send({error: 'Token inválido'});
-			}
+      if (token !== user.passwordResetToken) {
+        return res.status(400).send({ error: 'Token inválido' })
+      }
 
-			const now = new Date();
+      const now = new Date()
 
-			if(now > user.passwordResetExpires) {
-				return res.status(400).send({error: 'Token expirado, solicite novamente'});
-			}
+      if (now > user.passwordResetExpires) {
+        return res.status(400).send({ error: 'Token expirado, solicite novamente' })
+      }
 
-			user.password = newPassword
-			user.passwordResetToken = undefined
-			user.passwordResetExpires = undefined
-			await user.save();
+      user.password = newPassword
+      user.passwordResetToken = undefined
+      user.passwordResetExpires = undefined
+      await user.save()
 
-			return res.send();
-		} catch(error) {
-			console.log(error)
-			res.status(400).json({error: 'Erro durante a o processo de recuperação de senha, tente novamente.'})
-		}
-	}
+      return res.send()
+    } catch (error) {
+      console.log(error)
+      res.status(400).json({ error: 'Erro durante a o processo de recuperação de senha, tente novamente.' })
+    }
+  }
 }

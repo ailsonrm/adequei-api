@@ -18,7 +18,8 @@ module.exports = {
             '@models': './src/models/',
             '@services': './src/services/',
             '@utils': './src/utils/',
-            '@views': './src/views/'
+            '@views': './views/',
+            '@routes': './src/routes'
         }
       }]
     ],

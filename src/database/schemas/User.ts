@@ -28,17 +28,17 @@ const UserSchema = new Schema(
     firstName: {
       type: String,
       trim: true,
-      required: [function() {return this.document.type === 'cpf'}]
+      required: [function () { return this.document.type === 'cpf' }]
     },
     lastName: {
       type: String,
       trim: true,
-      required: [function() {return this.document.type === 'cpf'}]
+      required: [function () { return this.document.type === 'cpf' }]
     },
     companyName: {
       type: String,
       trim: true,
-      required: [function() {return this.document.type !== 'cpf'}]
+      required: [function () { return this.document.type !== 'cpf' }]
     },
     email: {
       type: String,
@@ -101,13 +101,12 @@ const UserSchema = new Schema(
   }
 )
 
-UserSchema.pre('save', async function<UserModel>(next) {
-  
-  if(this.password) {
-    this.password = await bcrypt.hash(this.password, 5)  
+UserSchema.pre('save', async function<UserModel> (next) {
+  if (this.password) {
+    this.password = await bcrypt.hash(this.password, 5)
   }
-  
-  if(this.document.number) {
+
+  if (this.document.number) {
     this.document.number = this.document.number.replace(/[^a-zA-Z 0-9]/g, '')
   }
 

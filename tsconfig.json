@@ -32,7 +32,7 @@
       "@utils/*": ["./src/utils/*"],
       "@routes/*": ["./src/routes/*"],
       "@resources/*": ["./src/resources/*"],
-      "@views/*": ["./src/views/*"]      
+      "@views/*": ["./views/*"]
     }
   },
   "include": [
