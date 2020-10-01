@@ -5,7 +5,7 @@ import { generateUserToken } from '@utils/userUtils'
 import crypto from 'crypto'
 import transporter from '@config/mailer'
 
-const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || ''
+const appURL = process.env.APP_URL
 
 export default class AuthController {
   async auth (req: Request, res: Response) {
@@ -59,7 +59,7 @@ export default class AuthController {
         to: email,
         subject: 'Solicitação de recuperação de senha Adequei',
         template: 'forgotPassword',
-        context: { apiBaseUrl, token, email }
+        context: { appURL, token, email }
       }
 
       transporter.sendMail(forgotMailInfo, (error) => {

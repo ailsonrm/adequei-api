@@ -4,7 +4,7 @@ import transporter from '@config/mailer'
 import validator from 'validator'
 import { cpf, cnpj } from 'cpf-cnpj-validator'
 
-const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || ''
+const appURL = process.env.APP_URL
 
 export default class UserController {
   async index (req: Request, res: Response) {
@@ -60,7 +60,7 @@ export default class UserController {
         to: email,
         subject: 'Obrigado por cadastrar-se na Adequei',
         template: 'registeredSuccessfully',
-        context: { apiBaseUrl, userName }
+        context: { appURL, userName }
       }
 
       transporter.sendMail(registeredSuccessfullyMailInfo, (error) => {
