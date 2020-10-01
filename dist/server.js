@@ -11,7 +11,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _dotenv.default.config();
 
 const appHost = process.env.HOST;
-const port = process.env.PORT || 3333;
+const port = process.env.PORT;
 
 _app.default.listen(port, () => {
   console.log(`⚡️ Server listening on ${appHost}:${port}`);
