@@ -2,6 +2,9 @@
   "name": "adequei-api",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "12.18.3"
+  },
   "author": {
     "name": "Ailson Ramos Moreira",
     "email": "ailson.rmoreira@gmail.com"
