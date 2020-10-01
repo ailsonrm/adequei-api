@@ -1,5 +1,4 @@
-### Project template NodeJS
+# Adequei - A plataforma que vai direcionar seu negócio ao 100% da LGPD.
 
-<p align="center">
-    <img src=".github/repository-open-graph-template.png"/>
-</p>
+## Adequei - LGPD' description='A plataforma que vai direcionar seu negócio ao 100% da LGPD.
+
