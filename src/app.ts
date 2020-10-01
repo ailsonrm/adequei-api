@@ -1,7 +1,7 @@
 import express from 'express'
 import routes from '@routes/router'
 import cors from 'cors'
-const actuator = require('express-actuator')
+import actuator from 'express-actuator'
 
 const app = express()
 

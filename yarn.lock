@@ -1280,6 +1280,13 @@
   dependencies:
     "@types/express" "*"
 
+"@types/express-actuator@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@types/express-actuator/-/express-actuator-1.6.0.tgz#144a625228481ac4326c30acd2fc24c82835bedf"
+  integrity sha512-kUR0KGXjkY0Rls0VR7oyc25meN14G3dyv21xy0JRTFI3rQW7bUCgQVzAF5ogsmNQN4QD7gNSat84pSLS7dnygg==
+  dependencies:
+    "@types/express" "*"
+
 "@types/express-handlebars@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@types/express-handlebars/-/express-handlebars-3.1.0.tgz#b931e6b51fef4efb25ee120394a42c03cb7a0d23"
