@@ -2,24 +2,24 @@
   "compilerOptions": {
     "target": "es5",                          
     "module": "commonjs",                     
-    //"lib": ["es6"],                             
-    //"allowJs": true,                       
+    "lib": ["es6"],                             
+    "allowJs": true,                       
     "outDir": "./dist",
     "rootDir": "./src",    
-    "strict": true,                   
-    //"sourceMap": true,
-    //"noImplicitAny": true,
-    //"jsx": "react",
-    //"removeComments": true,                
-    //"typeRoots": [
-    //  "./node_modules/@types",
-    //  "./src/@types"
-    //], 
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noImplicitThis": false,
+    "jsx": "react",
+    "removeComments": true,                
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/@types"
+    ], 
     "esModuleInterop": true,
-    //"resolveJsonModule": true,
-    //"experimentalDecorators": true,
-    //"emitDecoratorMetadata": true,
-    //"skipLibCheck": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
@@ -33,6 +33,8 @@
     }
   },
   "include": [
-    "src/**/*", "tests"
-  ]
+    "src/**/*", "tests/**/*"
+  ],
+  "rules": {
+  }
 }

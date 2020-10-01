@@ -4,6 +4,8 @@ import transporter from '@config/mailer'
 import validator from 'validator'
 import { cpf, cnpj } from 'cpf-cnpj-validator'
 
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || ''
+
 export default class UserController {
   async index (req: Request, res: Response) {
     const users = await User.find().select('+password')
@@ -49,7 +51,7 @@ export default class UserController {
       }
 
       const userCreated = await User.create(newUser)
-      userCreated.password = undefined
+      userCreated.password = ''
 
       const userName = userCreated.document.type === 'cpf' ? userCreated.firstName : userCreated.companyName
 
@@ -58,7 +60,7 @@ export default class UserController {
         to: email,
         subject: 'Obrigado por cadastrar-se na Adequei',
         template: 'registeredSuccessfully',
-        context: { userName }
+        context: { apiBaseUrl, userName }
       }
 
       transporter.sendMail(registeredSuccessfullyMailInfo, (error) => {

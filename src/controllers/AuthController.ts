@@ -5,6 +5,8 @@ import { generateUserToken } from '@utils/userUtils'
 import crypto from 'crypto'
 import transporter from '@config/mailer'
 
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || ''
+
 export default class AuthController {
   async auth (req: Request, res: Response) {
     const { email, password } = req.body
@@ -17,7 +19,7 @@ export default class AuthController {
 
     if (!await bcrypt.compare(password, user.password)) {
       return res.status(400).send({ error: 'E-mail ou senha incorretos' })
-    }
+    };
 
     if (!user.active) {
       return res.status(400).send({ error: 'Conta inativa' })
@@ -57,7 +59,7 @@ export default class AuthController {
         to: email,
         subject: 'Solicitação de recuperação de senha Adequei',
         template: 'forgotPassword',
-        context: { token, email }
+        context: { apiBaseUrl, token, email }
       }
 
       transporter.sendMail(forgotMailInfo, (error) => {
