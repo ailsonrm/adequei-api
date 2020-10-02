@@ -15,7 +15,7 @@ export default class UserController {
   async create (req: Request, res: Response) {
     try {
       const newUser = req.body
-      const { email, document, password, confirmPassword } = newUser
+      const { email, document, password, confirmPassword, acceptTerms } = newUser
 
       if (!validator.isEmail(email)) {
         return res.status(400).send({ error: 'E-mail inválido' })
@@ -48,6 +48,10 @@ export default class UserController {
 
       if (password !== confirmPassword) {
         return res.status(400).send({ error: 'Senhas não coincidem' })
+      }
+
+      if (!acceptTerms) {
+        return res.status(400).send({ error: 'Termo de serviços deve ser aceito' })
       }
 
       const userCreated = await User.create(newUser)

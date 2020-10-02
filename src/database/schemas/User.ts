@@ -7,6 +7,7 @@ export type UserAttributes = {
   companyName: string,
   password: string,
   active: Boolean,
+  acceptTerms: Boolean,
   document: {
     type: string,
     number: string
@@ -94,6 +95,10 @@ const UserSchema = new Schema(
     active: {
       type: Boolean,
       default: true
+    },
+    acceptTerms: {
+      type: Boolean,
+      required: true
     }
   },
   {
