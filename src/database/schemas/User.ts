@@ -8,6 +8,15 @@ export type UserAttributes = {
   password: string,
   active: Boolean,
   acceptTerms: Boolean,
+  ipLocationData: {
+    ip: '',
+    city: '',
+    region: ''
+    country: '',
+    latitude: 0,
+    longitude: 0,
+    org: ''
+  },
   document: {
     type: string,
     number: string
@@ -99,6 +108,29 @@ const UserSchema = new Schema(
     acceptTerms: {
       type: Boolean,
       required: true
+    },
+    ipLocationData: {
+      ip: {
+        type: String
+      },
+      city: {
+        type: String
+      },
+      region: {
+        type: String
+      },
+      country: {
+        type: String
+      },
+      org: {
+        type: String
+      },
+      latitude: {
+        type: Number
+      },
+      longitude: {
+        type: Number
+      }
     }
   },
   {
