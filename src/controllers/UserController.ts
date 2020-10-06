@@ -51,7 +51,7 @@ export default class UserController {
       }
 
       if (!acceptTerms) {
-        return res.status(400).send({ error: 'Termo de serviços deve ser aceito' })
+        return res.status(400).send({ error: 'Termos de serviço devem ser aceitos' })
       }
 
       const userCreated = await User.create(newUser)
