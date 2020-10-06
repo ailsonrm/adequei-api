@@ -29,7 +29,8 @@
       "@routes/*": ["./src/routes/*"],
       "@shared/*": ["./src/shared/*"],
       "@utils/*": ["./src/utils/*"],
-      "@views/*": ["./views/*"]
+      "@services/*": [".src/services/*"],
+      "@views/*": ["./views/*"]     
     }
   },
   "include": [

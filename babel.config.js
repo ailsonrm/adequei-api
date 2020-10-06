@@ -19,6 +19,7 @@ module.exports = {
             '@routes': './src/routes/',
             '@shared': './src/shared/',
             '@utils': './src/utils/',
+            '@services': './src/services/',
             '@views': './views/'            
         }
       }]

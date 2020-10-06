@@ -3,6 +3,7 @@ import User from '@database/schemas/User'
 import transporter from '@config/mailer'
 import validator from 'validator'
 import { cpf, cnpj } from 'cpf-cnpj-validator'
+import { getIpLocationData } from '../services/ipLocation'
 
 const appURL = process.env.APP_URL
 
@@ -53,6 +54,8 @@ export default class UserController {
       if (!acceptTerms) {
         return res.status(400).send({ error: 'Termos de serviço devem ser aceitos' })
       }
+
+      newUser.ipLocationData = await getIpLocationData()
 
       const userCreated = await User.create(newUser)
       userCreated.password = ''
