@@ -26,7 +26,13 @@ export default class UserController {
         return res.status(400).send({ error: 'E-mail já cadastrado' })
       }
 
-      const { type, number } = document
+      var { type, number } = document
+
+      number = number.replace(/[^a-zA-Z 0-9]/g, '')
+
+      if (await User.findOne({ 'document.number': number, 'document.type': type })) {
+        return res.status(400).send({ error: 'Documento já cadastrado' })
+      }
 
       if (type === 'cpf') {
         newUser.companyName = undefined
