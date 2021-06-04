@@ -87,4 +87,26 @@ export default class UserController {
       return res.status(400).json({ error: 'Erro durante a efetivação do cadastro cadastro' })
     };
   }
+
+  async update (req: Request, res: Response) {
+    try {
+      const { firstName, lastName } = req.body
+
+      const userUpdated = await User.findByIdAndUpdate(req.params.userId, {
+        firstName,
+        lastName
+      }, { new: true })
+
+      userUpdated.ipLocationData = undefined
+      userUpdated.acceptTerms = undefined
+      userUpdated.active = undefined
+
+      return res.json({
+        user: userUpdated
+      })
+    } catch (err) {
+      console.log(err)
+      return res.status(400).json({ error: 'Erro durante a efetivação do cadastro cadastro' })
+    };
+  }
 }
